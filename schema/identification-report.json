@@ -1,7 +1,7 @@
 {
-    "version": "0.1",
+    "version": "1.0.1",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "$id": "https://github.com/Governikus/IdentificationReport/blob/master/schema/identification-report.json",
+    "$id": "https://raw.githubusercontent.com/Governikus/IdentificationReport/1.0.1/schema/identification-report.json",
     "type": "object",
     "title": "json-schema for identification service reports",
     "description": "This is a schema definition for an identification report. This report is used to have a receipt to prove that an identificaton process was successfully accomplisched",
