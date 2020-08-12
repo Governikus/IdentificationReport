@@ -1,0 +1,183 @@
+{
+    "version": "0.1",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "$id": "https://github.com/Governikus/IdentificationReport/blob/master/schema/identification-report.json",
+    "type": "object",
+    "title": "json-schema for identification service reports",
+    "description": "This is a schema definition for an identification report. This report is used to have a receipt to prove that an identificaton process was successfully accomplisched",
+    "default": {},
+    "required": [
+        "reportID",
+        "serverIdentity",
+        "reportTime",
+        "identificationDate",
+        "idStatus",
+        "subjectRef",
+        "contextInformation",
+        "loaSent",
+        "idStatement"
+    ],
+    "properties": {
+        "reportID": {
+            "$id": "#/properties/reportID",
+            "type": "string",
+            "title": "Generic ID",
+            "description": "Must be uniq to a single report. GUID is recommended here",
+            "default": "",
+            "examples": [
+                "be4f9806-0b5f-45c3-a008-96fd2750f8cb"
+            ]
+        },
+        "serverIdentity": {
+            "$id": "#/properties/serverIdentity",
+            "type": "string",
+            "title": "ServerIdentity",
+            "description": "This is a server id as software instance. This could be the server IP address, servername or the URL of the SAML endpoint providing this identity report (like ServerIdentity in XTA2 Version 4)",
+            "default": "",
+            "examples": [
+                "https://test.governikus-eid.de/gov_autent/async"
+            ]
+        },
+        "reportTime": {
+            "$id": "#/properties/reportTime",
+            "type": "string",
+            "format": "date-time",
+            "title": "Creation date of this report",
+            "description": "Datetime of the creation of this report (like ReportTime in XTA2 Version 4)",
+            "default": "",
+            "examples": [
+                "2020-06-25T10:20:39+00:00"
+            ]
+        },
+        "identificationDate": {
+            "$id": "#/properties/identificationDate",
+            "type": "string",
+            "format": "date-time",
+            "title": "Identification Timestamp",
+            "description": "Datetime of the identification process as stated in the original id statement",
+            "default": "",
+            "examples": [
+                "2020-06-25T10:20:39+02:00"
+            ]
+        },
+        "idStatus": {
+            "$id": "#/properties/idStatus",
+            "type": "string",
+            "enum": [
+                "success",
+                "failure",
+                "unknown"
+            ],
+            "title": "Identification Status",
+            "description": "This is the value to indicate the status of the identification process. In case of failure the corresponding reason shall be stated in the idStatement attribute",
+            "default": "unknown",
+            "examples": [
+                "success"
+            ]
+        },
+        "idStatement": {
+            "$id": "#/properties/idStatement",
+            "type": "string",
+            "title": "More details on identification outcome",
+            "description": "This is the error reason or some additional information in case of unknown or success situations. The corresponding message should be human understanable",
+            "default": "",
+            "examples": [
+                "Error: requested LoA could not be found"
+            ]
+        },
+        "subjectRef": {
+            "$id": "#/properties/subjectRef",
+            "type": "object",
+            "title": "SubjectRef",
+            "description": "This should be a short link to the subject authenticated. Currently supported: firstName and lastName",
+            "default": "",
+            "properties": {
+                "firstName": {
+                    "type": "string",
+                    "description": "The person's first name."
+                },
+                "lastName": {
+                    "type": "string",
+                    "description": "The person's last name."
+                }
+            },
+            "examples": [
+                {
+                    "firstName": "John",
+                    "lastName": "Doe"
+                }
+            ]
+        },
+        "contextInformation": {
+            "$id": "#/properties/contextInformation",
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "title": "Context Information provided by the service",
+            "description": "The element corresponds to the TransactionContext in BSI TR-03130 which MAY be used to transmit context information like an ID or a hash. To have a link between this identification report and the service for which the identification process was started",
+            "default": "",
+            "examples": [
+                [
+                    "Application ID: XYZ900LKJL"
+                ]
+            ]
+        },
+        "documentReferences": {
+            "$id": "#/properties/documentReferences",
+            "title": "can be used to link specific documents to an identification process",
+            "description": "This element can contain references to documents including their hashes. This is an optional attribut.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "documentName": {
+                        "type": "string"
+                    },
+                    "hashAlgo": {
+                        "type": "string"
+                    },
+                    "digest": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "documentName",
+                    "hashAlgo",
+                    "digest"
+                ]
+            },
+            "default": "",
+            "examples": [
+                [
+                    {
+                        "documentName":"test.pdf",
+                        "hashAlgo":"SHA-256","digest":"0c2720631b927e25d5cb8b5ca2b9408c552ea76797e3419245931296732fd0d2"
+                    }
+                ]
+            ]
+        },
+        "loaSent": {
+            "$id": "#/properties/loaSent",
+            "type": "string",
+            "title": "Level of assurance received",
+            "description": "in eIDAS contexts an id scheme (if it is notified) has a known LoA. When used in a national context only the values from the authority bsi.bund.de SHALL be used, which correspond to the levels as defined in [TR-03107-1]. See also BSI TR-03130",
+            "default": "unknown",
+            "enum": [
+                "http://eidas.europa.eu/LoA/low",
+                "http://eidas.europa.eu/LoA/substantial",
+                "http://eidas.europa.eu/LoA/high",
+                "http://eidas.europa.eu/NotNotified/LoA/low",
+                "http://eidas.europa.eu/NotNotified/LoA/substantial",
+                "http://eidas.europa.eu/NotNotified/LoA/high",
+                "http://bsi.bund.de/eID/LoA/normal",
+                "http://bsi.bund.de/eID/LoA/substantiell",
+                "http://bsi.bund.de/eID/LoA/hoch",
+                "unknown"
+            ],
+            "examples": [
+                "http://eidas.europa.eu/LoA/high"
+            ]
+        }
+    }
+}

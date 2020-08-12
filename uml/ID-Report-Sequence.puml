@@ -1,0 +1,42 @@
+@startuml ID-Report Sequence
+
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 200
+skinparam titleBorderRoundCorner 15
+skinparam titleBorderThickness 4
+skinparam titleBorderColor grey
+skinparam TitleFontSize 16
+
+title
+    Sequence to show the use case 
+    for Identification Reports
+end title
+
+participant "Service-Provider" as sp
+participant "eID-Server" as eids
+
+autonumber
+
+sp->eids: Please idenitfy this person, and give me an identification report
+    group Identification-Process
+          eids->>eids: a lot of redirects will happen here
+    end
+    note right 
+        Identify alone or use a different idp
+        e.g. in federation scenarios or eidas
+    end note
+eids->sp: Send personal Data of identified person and identification report
+group
+    sp->sp: use personal data for service
+    sp->sp: store identification report as a proof (if needed)
+    sp->sp: dismiss assertion from eID-Server
+end
+note right 
+    ==  <size:20><&pin> local handling of personal data  ==
+    Since the identitfication assertion is only vaid for
+    a short period of time the Service Provider can keep
+    the Identification Report as an evidence for a valid
+    authentication or identification process in a certain context 
+end note
+@enduml

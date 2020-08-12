@@ -1,0 +1,15 @@
+{
+    "reportID": "be4f9806-0b5f-45c3-a008-96fd2750f8cb",
+    "serverIdentity": "https://test.governikus-eid.de/gov_autent/async",
+    "reportTime": "2020-06-25T10:20:39+02:00",
+    "identificationDate": "2020-06-25T10:19:54+02:00",
+    "idStatus": "success",
+    "subjectRef":  {"firstName": "John","lastName": "Doe" },
+    "contextInformation": ["Antrag auf Kindergeld: 0815/763763"],
+    "idStatement": "successful identification sent by SAML-Assertion",
+    "documentReferences":[{
+      "documentName":"test.pdf",
+      "hashAlgo":"SHA-256","digest":"0c2720631b927e25d5cb8b5ca2b9408c552ea76797e3419245931296732fd0d2"
+  }],
+    "loaSent": "http://eidas.europa.eu/LoA/low"
+  }
