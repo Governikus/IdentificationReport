@@ -38,7 +38,7 @@ The schema can be found in the ```schema``` directory. You will find the JSON We
 }
 ```
 ### Report Sample (as payload for JWT) 
-See also [sample-report](doc/sample/sample-report.json)
+See also [sample-report](sample/sample-report.json)
 
 ```json
 {
@@ -57,7 +57,7 @@ See also [sample-report](doc/sample/sample-report.json)
     "loaSent": "http://eidas.europa.eu/LoA/low"
   }
 ```
-### Signature Materia
+### Signature Material
 If you want to verifiy the JWT yourself feel free to use the test keys found here. 
 
 #### Private Key
