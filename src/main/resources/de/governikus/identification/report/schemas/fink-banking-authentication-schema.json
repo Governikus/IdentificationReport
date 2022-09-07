@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/fink-banking-authentication.json",
+    "type": "object",
+    "title": "FINK Banking",
+    "description": "Minimal dataset used for banking with FINK",
+    "default": {},
+    "properties": {
+        "firstName": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "Max"
+            ]
+        },
+        "lastName": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "Mustermann"
+            ]
+        }
+    }
+}

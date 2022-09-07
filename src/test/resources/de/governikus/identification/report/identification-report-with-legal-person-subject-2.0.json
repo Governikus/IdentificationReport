@@ -1,0 +1,32 @@
+{
+    "reportId": "be4f9806-0b5f-45c3-a008-96fd2750f8cb",
+    "serverIdentity": "https://docker.governikus-eid.de/aidc-next/npa",
+    "reportTime": "2020-06-25T10:20:39+02:00",
+    "identificationTime": "2020-06-25T10:19:54+02:00",
+    "subjectRef": {
+        "subject": {
+            "legalPerson": {
+                "elsterData": {
+                    "id": "98828d19-55be-4624-84e7-81cea366963e",
+                    "organizationName": "Organization A",
+                    "registerType": "Handelsregister A",
+                    "registerPlace": "Bremen",
+                    "registerNumber": "HB-102",
+                    "legalForm": "GmbH",
+                    "legalFormKey": "12",
+                    "occupation": "CEO",
+                    "occupationKey": "1",
+                    "personId": "daa98cb4-288f-4cee-8798-84470bafadca",
+                    "addressData": {
+                        "street": "GROẞENHAINER STR. 133/135",
+                        "city": "DRESDEN",
+                        "country": "D",
+                        "zipCode": "01129"
+                    }
+                }
+            }
+        }
+    },
+    "authenticationTimestamp": "2022-07-29T11:16:52Z",
+    "levelOfAssurance": "http://bsi.bund.de/eID/LoA/hoch"
+}

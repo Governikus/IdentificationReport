@@ -1,0 +1,27 @@
+{
+    "reportId": "be4f9806-0b5f-45c3-a008-96fd2750f8cb",
+    "serverIdentity": "https://test.governikus-eid.de/gov_autent/async",
+    "reportTime": "2020-06-25T10:20:39+02:00",
+    "identificationTime": "2020-06-25T10:19:54+02:00",
+    "subjectRef": {
+        "subject": {
+            "naturalPerson": {
+                "restrictedId": "1234567890123456789012345678901234567890123456789012345678901234",
+                "givenName": "AĞÇA",
+                "familyName": "ÖZM̂EN",
+                "dateOfBirth": "04.02.1939",
+                "placeOfBirth": "DESSAU-ROẞLAU",
+                "birthName": "Güûcu♥",
+                "placeOfResidence": {
+                    "street": "GROẞENHAINER STR. 133/135",
+                    "locality": "DRESDEN",
+                    "country": "D",
+                    "zipCode": "01129"
+                },
+                "authenticationTimestamp": "01.07.2022 um 11:16:52 Uhr",
+                "authenticationMethod": "EID"
+            }
+        }
+    },
+    "levelOfAssurance": "http://bsi.bund.de/eID/LoA/hoch"
+}

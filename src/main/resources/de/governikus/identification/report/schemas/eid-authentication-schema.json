@@ -1,0 +1,119 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/eid-authentication.json",
+    "type": "object",
+    "title": "electronic identity card (eID) authentication data",
+    "description": "This schema represents the data of an authentication with an electronic identity card (eID)",
+    "default": {},
+    "required": [
+        "restrictedId"
+    ],
+    "properties": {
+        "restrictedId": {
+            "type": "string",
+            "title": "unique identifier",
+            "description": "An identifier that is unique with the eID card and the authentication provider that authenticated the resident.",
+            "default": "",
+            "examples": [
+                "1234567890123456789012345678901234567890123456789012345678901234"
+            ]
+        },
+        "givenName": {
+            "type": "string",
+            "description": "first name of the identification cards owner",
+            "default": "",
+            "examples": [
+                "John"
+            ]
+        },
+        "familyName": {
+            "type": "string",
+            "description": "last name of the identification cards owner",
+            "default": "",
+            "examples": [
+                "Doe"
+            ]
+        },
+        "dateOfBirth": {
+            "type": "string",
+            "pattern": "^((0?[1-9]|[12][0-9]|3[01])-)?((0?[1-9]|1[0-2])-)?[0-9]{4}$",
+            "description": "the date of birth of the identification cards owner. Day and month are not always available.",
+            "default": "",
+            "examples": [
+                "1-1-1999",
+                "01-1-2000",
+                "1-01-2001",
+                "31-12-2002",
+                "12-2003",
+                "1-2004",
+                "02-2005",
+                "2006"
+            ]
+        },
+        "placeOfBirth": {
+            "type": "string",
+            "description": "the birth place of the identification cards owner",
+            "default": "",
+            "examples": [
+                "DESSAU-ROẞLAU"
+            ]
+        },
+        "birthName": {
+            "type": "string",
+            "description": "the birth name of the identification cards owner",
+            "default": "",
+            "examples": [
+                "Güûcu"
+            ]
+        },
+        "placeOfResidence": {
+            "type": "object",
+            "description": "The person's current address.",
+            "oneOf": [
+                {
+                    "properties": {
+                        "street": {
+                            "type": "string",
+                            "description": "The street the person does live in."
+                        },
+                        "city": {
+                            "type": "string",
+                            "description": "The city the person does live in."
+                        },
+                        "state": {
+                            "type": "string",
+                            "description": "The state the person does live in."
+                        },
+                        "country": {
+                            "type": "string",
+                            "description": "The country the person does live in."
+                        },
+                        "zipCode": {
+                            "type": "string",
+                            "description": "The zip code of the city the person does live in."
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "properties": {
+                        "freeTextPlace": {
+                            "type": "string",
+                            "description": "The person's complete address."
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "properties": {
+                        "noPlaceInfo": {
+                            "type": "string",
+                            "description": "If the person has no address in the current country."
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            ]
+        }
+    }
+}

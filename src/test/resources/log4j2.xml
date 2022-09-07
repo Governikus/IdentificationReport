@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="de.governikus.autent.consent.constants.logging">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                pattern="%d{DATE} [%t] %highlight{%-5level}{FATAL=bright red, ERROR=red, WARN=yellow, INFO=white, DEBUG=bright blue, TRACE=green } %logger (%F:%L) - %highlight{%msg%n%throwable}{FATAL=bright red, ERROR=red, WARN=yellow, INFO=white, DEBUG=bright blue, TRACE=green }"
+                disableAnsi="false"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.networknt.schema" level="info">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>

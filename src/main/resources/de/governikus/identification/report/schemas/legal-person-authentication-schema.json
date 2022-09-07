@@ -1,0 +1,103 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/legal-person-authentication.json",
+    "type": "object",
+    "title": "legal person identification data",
+    "description": "dataset of a legal person with an embedded reference to the natural person that did the authentication",
+    "default": {},
+    "required": [
+        "id"
+    ],
+    "properties": {
+        "id": {
+            "type": "string",
+            "title": "unique identifier",
+            "description": "An identifier that is unique with the eID card and the authentication provider that authenticated the legal entity.",
+            "default": "",
+            "examples": [
+                "be4f9806-0b5f-45c3-a008-96fd2750f8cb"
+            ]
+        },
+        "organizationName": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "test workshop"
+            ]
+        },
+        "registerType": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "PR"
+            ]
+        },
+        "registerPlace": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "Berlin"
+            ]
+        },
+        "registerNumber": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "36936"
+            ]
+        },
+        "legalForm": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "public limited company"
+            ]
+        },
+        "legalFormKey": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "310"
+            ]
+        },
+        "personId": {
+            "type": "string",
+            "default": "",
+            "examples": [
+                "be4f9806-0b5f-45c3-a008-96fd2750f8cb"
+            ]
+        },
+        "address": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "street": {
+                    "type": "string"
+                },
+                "locality": {
+                    "type": "string"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "zipCode": {
+                    "type": "string"
+                }
+            }
+        },
+        "description": "the address of the legal person",
+        "default": "",
+        "examples": [
+            {
+                "street": "Zillestraße 17",
+                "locality": "Berlin",
+                "region": "Charlottenburg",
+                "country": "DE",
+                "zipCode": "10585"
+            }
+        ]
+    }
+}

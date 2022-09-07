@@ -1,0 +1,24 @@
+{
+    "reportId": "be4f9806-0b5f-45c3-a008-96fd2750f8cb",
+    "serverIdentity": "https://test.governikus-eid.de/gov_autent/async",
+    "reportTime": "2020-06-25T10:20:39+02:00",
+    "identificationTime": "2020-06-25T10:19:54+02:00",
+    "subjectRef": {
+        "restrictedId": "1",
+        "givenName": "John",
+        "familyName": "Doe",
+        "dateOfBirth": "1-1-1986",
+        "placeOfBirth": "Berlin",
+        "birthName": "Dorian",
+        "placeOfResidence": {
+            "street": "GROẞENHAINER STR. 133/135",
+            "city": "DRESDEN",
+            "state": "Dresden",
+            "country": "D",
+            "zipCode": "01129"
+        }
+    },
+    "authenticationTimestamp": "2020-06-25T10:20:39+02:00",
+    "idStatement": "successful identification sent by SAML-Assertion",
+    "levelOfAssurance": "http://eidas.europa.eu/LoA/high"
+}
