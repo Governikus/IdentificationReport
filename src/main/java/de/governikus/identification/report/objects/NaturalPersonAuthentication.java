@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class EidAuthentication extends AuthenticationObject
+public class NaturalPersonAuthentication extends AuthenticationObject
 {
 
   private String restrictedId;
@@ -37,14 +37,14 @@ public class EidAuthentication extends AuthenticationObject
   private Address placeOfResidence;
 
   @Builder
-  public EidAuthentication(String restrictedId,
-                           String givenName,
-                           String familyName,
-                           String dateOfBirth,
-                           String placeOfBirth,
-                           String birthName,
-                           Address placeOfResidence,
-                           Map<String, Object> additionalProperties)
+  public NaturalPersonAuthentication(String restrictedId,
+                                     String givenName,
+                                     String familyName,
+                                     String dateOfBirth,
+                                     String placeOfBirth,
+                                     String birthName,
+                                     Address placeOfResidence,
+                                     Map<String, Object> additionalProperties)
   {
     super(additionalProperties);
     this.restrictedId = restrictedId;
@@ -57,11 +57,11 @@ public class EidAuthentication extends AuthenticationObject
   }
 
   /**
-   * the location to the schema "eid-authentication-schema.json" to validate this object type
+   * the location to the schema "natural-person-schema.json" to validate this object type
    */
   @Override
   public String getSchemaLocation()
   {
-    return SchemaLocations.EID_AUTHENTICATION_SCHEMA_LOCATION;
+    return SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION;
   }
 }

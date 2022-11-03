@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/eid-authentication.json",
+    "$id": "https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/natural-person.json",
     "type": "object",
     "title": "electronic identity card (eID) authentication data",
     "description": "This schema represents the data of an authentication with an electronic identity card (eID)",

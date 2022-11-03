@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  * @since 07.09.2022
  */
 @Slf4j
-public class EidAuthenticationTest implements FileReferences
+public class NaturalPersonAuthenticationTest implements FileReferences
 {
 
   /**
@@ -29,9 +29,9 @@ public class EidAuthenticationTest implements FileReferences
   @Test
   public void testEmptyEidAuthentication()
   {
-    EidAuthentication eidAuthentication = EidAuthentication.builder().build();
-    Assertions.assertFalse(SchemaValidator.isJsonValid(SchemaLocations.EID_AUTHENTICATION_SCHEMA_LOCATION,
-                                                       eidAuthentication));
+    NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder().build();
+    Assertions.assertFalse(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION,
+      naturalPersonAuthentication));
   }
 
   /**
@@ -40,12 +40,12 @@ public class EidAuthenticationTest implements FileReferences
   @Test
   public void testEidAuthenticationWithRestrictedIdOnly()
   {
-    EidAuthentication eidAuthentication = EidAuthentication.builder()
+    NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
                                                            .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
                                                            .build();
 
-    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.EID_AUTHENTICATION_SCHEMA_LOCATION,
-                                                      eidAuthentication));
+    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION,
+      naturalPersonAuthentication));
   }
 
   /**
@@ -54,7 +54,7 @@ public class EidAuthenticationTest implements FileReferences
   @Test
   public void testFreetextPlaceIsAccepted()
   {
-    EidAuthentication eidAuthentication = EidAuthentication.builder()
+    NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
                                                            .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
                                                            .givenName("Max")
                                                            .familyName("Mustermann")
@@ -65,8 +65,8 @@ public class EidAuthenticationTest implements FileReferences
                                                                                     .freeTextPlace("street 1")
                                                                                     .build())
                                                            .build();
-    JsonObject jsonObject = JsonObject.mapFrom(eidAuthentication);
-    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.EID_AUTHENTICATION_SCHEMA_LOCATION, jsonObject));
+    JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
+    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
   }
 
   /**
@@ -75,7 +75,7 @@ public class EidAuthenticationTest implements FileReferences
   @Test
   public void testNoPlaceInfoIsAccepted()
   {
-    EidAuthentication eidAuthentication = EidAuthentication.builder()
+    NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
                                                            .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
                                                            .givenName("Max")
                                                            .familyName("Mustermann")
@@ -86,8 +86,8 @@ public class EidAuthenticationTest implements FileReferences
                                                                                     .noPlaceInfo("nowhere")
                                                                                     .build())
                                                            .build();
-    JsonObject jsonObject = JsonObject.mapFrom(eidAuthentication);
-    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.EID_AUTHENTICATION_SCHEMA_LOCATION, jsonObject));
+    JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
+    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
   }
 
   /**
@@ -96,7 +96,7 @@ public class EidAuthenticationTest implements FileReferences
   @Test
   public void testStructuredPlaceAndNoPlaceInfoAreNotAcceptedTogether()
   {
-    EidAuthentication eidAuthentication = EidAuthentication.builder()
+    NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
                                                            .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
                                                            .givenName("Max")
                                                            .familyName("Mustermann")
@@ -109,8 +109,8 @@ public class EidAuthenticationTest implements FileReferences
                                                                                     .noPlaceInfo("nowhere")
                                                                                     .build())
                                                            .build();
-    JsonObject jsonObject = JsonObject.mapFrom(eidAuthentication);
-    Assertions.assertFalse(SchemaValidator.isJsonValid(SchemaLocations.EID_AUTHENTICATION_SCHEMA_LOCATION, jsonObject));
+    JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
+    Assertions.assertFalse(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
   }
 
   /**
@@ -119,7 +119,7 @@ public class EidAuthenticationTest implements FileReferences
   @Test
   public void testMixOfAddressTypes()
   {
-    EidAuthentication eidAuthentication = EidAuthentication.builder()
+    NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
                                                            .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
                                                            .givenName("Max")
                                                            .familyName("Mustermann")
@@ -136,8 +136,8 @@ public class EidAuthenticationTest implements FileReferences
                                                                                     .freeTextPlace("somewhere")
                                                                                     .build())
                                                            .build();
-    JsonObject jsonObject = JsonObject.mapFrom(eidAuthentication);
-    Assertions.assertFalse(SchemaValidator.isJsonValid(SchemaLocations.EID_AUTHENTICATION_SCHEMA_LOCATION, jsonObject));
+    JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
+    Assertions.assertFalse(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
   }
 
   /**
@@ -147,7 +147,7 @@ public class EidAuthenticationTest implements FileReferences
   @ValueSource(strings = {"1-1-1999", "01-1-2000", "1-01-2001", "31-12-2002", "12-2003", "1-2004", "02-2005", "2006"})
   public void testDateOfBirth(String dateOfBirth)
   {
-    EidAuthentication eidAuthentication = EidAuthentication.builder()
+    NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
                                                            .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
                                                            .givenName("Max")
                                                            .familyName("Mustermann")
@@ -155,8 +155,8 @@ public class EidAuthenticationTest implements FileReferences
                                                            .placeOfBirth("Bremen")
                                                            .birthName("Liebmann")
                                                            .build();
-    JsonObject jsonObject = JsonObject.mapFrom(eidAuthentication);
-    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.EID_AUTHENTICATION_SCHEMA_LOCATION, jsonObject));
+    JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
+    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
   }
 
   /**
@@ -167,7 +167,7 @@ public class EidAuthenticationTest implements FileReferences
   @Test
   public void testUseAdditionalProperties()
   {
-    EidAuthentication eidAuthentication = EidAuthentication.builder()
+    NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
                                                            .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
                                                            .givenName("Max")
                                                            .familyName("Mustermann")
@@ -179,11 +179,11 @@ public class EidAuthenticationTest implements FileReferences
                                                                                     .build())
                                                            .additionalProperties(Map.of("custom", "custom"))
                                                            .build();
-    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.EID_AUTHENTICATION_SCHEMA_LOCATION,
-                                                      eidAuthentication));
-    JsonObject jsonObject = JsonObject.mapFrom(eidAuthentication);
+    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION,
+      naturalPersonAuthentication));
+    JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
     Assertions.assertEquals("custom", jsonObject.getString("custom"));
-    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.EID_AUTHENTICATION_SCHEMA_LOCATION, jsonObject));
+    Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
   }
 
   /**
@@ -192,11 +192,12 @@ public class EidAuthenticationTest implements FileReferences
   @Test
   public void testSchemaIdIsCorrectlyExtracted()
   {
-    EidAuthentication eidAuthentication = EidAuthentication.builder()
-                                                           .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
+    NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
+                                                           .restrictedId(
+                                                             "1234567890123456789012345678901234567890123456789012345678901234")
                                                            .build();
     Assertions.assertEquals("https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0"
-                            + "/schema/eid-authentication.json",
-                            eidAuthentication.getSchemaId());
+                            + "/schema/natural-person.json",
+                            naturalPersonAuthentication.getSchemaId());
   }
 }

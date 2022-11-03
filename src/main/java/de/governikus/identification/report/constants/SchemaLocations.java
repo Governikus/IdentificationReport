@@ -20,11 +20,10 @@ public final class SchemaLocations
   public static final String IDENTIFICATION_REPORT_2_0_SCHEMA_LOCATION = BASE_PATH
                                                                          + "/identification-report-schema-2.0.json";
 
-  public static final String EID_AUTHENTICATION_SCHEMA_LOCATION = BASE_PATH + "/eid-authentication-schema.json";
+  public static final String NATURAL_PERSON_SCHEMA_LOCATION = BASE_PATH + "/natural-person-schema.json";
 
   public static final String LEGAL_PERSON_AUTHENTICATION_SCHEMA_LOCATION = BASE_PATH
                                                                            + "/legal-person-authentication-schema.json";
 
-  public static final String FINK_AML_AUTHENTICATION_SCHEMA_LOCATION = BASE_PATH
-                                                                       + "/fink-banking-authentication-schema.json";
+  public static final String NATURAL_PERSON_MINIMAL_SCHEMA_LOCATION = BASE_PATH + "/natural-person-minimal-schema.json";
 }

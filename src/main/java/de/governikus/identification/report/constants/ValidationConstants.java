@@ -11,9 +11,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import de.governikus.identification.report.objects.AuthenticationObject;
-import de.governikus.identification.report.objects.EidAuthentication;
-import de.governikus.identification.report.objects.FinkBankingAuthentication;
 import de.governikus.identification.report.objects.LegalPersonAuthentication;
+import de.governikus.identification.report.objects.NaturalPersonAuthentication;
+import de.governikus.identification.report.objects.NaturalPersonMinimalAuthentication;
 import de.governikus.identification.report.validation.SchemaValidator;
 import io.vertx.core.json.JsonObject;
 import io.vertx.json.schema.JsonSchema;
@@ -42,10 +42,10 @@ public final class ValidationConstants
 
   /**
    * contains references to subtype-classes of {@link AuthenticationObject}. These will be used to identify a
-   * fitting subtype-class based on a schema identifier ($id-attribute). The eid-authentication-schema.json for
+   * fitting subtype-class based on a schema identifier ($id-attribute). The natural-person-schema.json for
    * example is identified by the schema-id
    * "https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/eid-authentication.json",
-   * wich points to the subtype-class {@link EidAuthentication}.
+   * wich points to the subtype-class {@link NaturalPersonAuthentication}.
    */
   private static final Map<String, Class<? extends AuthenticationObject>> AUTH_OBJECT_SUB_TYPE_REFERENCES = new HashMap<>();
 
@@ -56,13 +56,13 @@ public final class ValidationConstants
   {
     AUTH_OBJECT_SUB_TYPE_REFERENCES.put("https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0"
                                         + "/schema/eid-authentication.json",
-                                        EidAuthentication.class);
+                                        NaturalPersonAuthentication.class);
     AUTH_OBJECT_SUB_TYPE_REFERENCES.put("https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0"
                                         + "/schema/legal-person-authentication.json",
                                         LegalPersonAuthentication.class);
     AUTH_OBJECT_SUB_TYPE_REFERENCES.put("https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0"
-                                        + "/schema/fink-aml-authentication.json",
-                                        FinkBankingAuthentication.class);
+                                        + "/schema/natural-person-minimal.json",
+                                        NaturalPersonMinimalAuthentication.class);
 
     OBJECT_MAPPER.registerModule(new JavaTimeModule());
   }

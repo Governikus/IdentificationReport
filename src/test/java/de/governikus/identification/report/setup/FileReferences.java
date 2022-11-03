@@ -26,7 +26,7 @@ public interface FileReferences
   String IDENTIFICATION_REPORT_WITH_LEGAL_PERSON_SUBJECT_2_0 = BASE_PATH
                                                                + "/identification-report-with-legal-person-subject-2.0.json";
 
-  String FINK_BANKING_REPORT = BASE_PATH + "/fink-banking-report.json";
+  String FINK_BANKING_REPORT = BASE_PATH + "/natural-person-minimal-report.json";
 
   /**
    * reads a file from the test-resources and modifies the content

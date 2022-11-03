@@ -14,9 +14,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import de.governikus.identification.report.constants.SchemaLocations;
 import de.governikus.identification.report.objects.AuthenticationObject;
-import de.governikus.identification.report.objects.EidAuthentication;
 import de.governikus.identification.report.objects.IdentificationReport;
 import de.governikus.identification.report.objects.LevelOfAssurance;
+import de.governikus.identification.report.objects.NaturalPersonAuthentication;
 import de.governikus.identification.report.setup.FileReferences;
 import de.governikus.identification.report.validation.SchemaValidator;
 import io.vertx.core.json.JsonObject;
@@ -131,10 +131,10 @@ public class IdentificationReportTest implements FileReferences
   // @formatter:off
   @CsvSource({IDENTIFICATION_REPORT_2_0
                 + ",https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/eid-authentication.json"
-                + ",de.governikus.identification.report.objects.EidAuthentication",
+                + ",de.governikus.identification.report.objects.NaturalPersonAuthentication",
               IDENTIFICATION_REPORT_WITH_NATURAL_PERSON_SUBJECT_2_0
                 + ",https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/eid-authentication.json"
-                + ",de.governikus.identification.report.objects.EidAuthentication",
+                + ",de.governikus.identification.report.objects.NaturalPersonAuthentication",
               IDENTIFICATION_REPORT_WITH_LEGAL_PERSON_SUBJECT_2_0
                 + ",https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/legal-person-authentication.json"
                 + ",de.governikus.identification.report.objects.LegalPersonAuthentication"})
@@ -160,13 +160,13 @@ public class IdentificationReportTest implements FileReferences
    */
   @ParameterizedTest
   // @formatter:off
-  @CsvSource({IDENTIFICATION_REPORT_2_0 + ",de.governikus.identification.report.objects.EidAuthentication",
+  @CsvSource({IDENTIFICATION_REPORT_2_0 + ",de.governikus.identification.report.objects.NaturalPersonAuthentication",
               IDENTIFICATION_REPORT_WITH_NATURAL_PERSON_SUBJECT_2_0
-                + ",de.governikus.identification.report.objects.EidAuthentication",
+                + ",de.governikus.identification.report.objects.NaturalPersonAuthentication",
               IDENTIFICATION_REPORT_WITH_LEGAL_PERSON_SUBJECT_2_0
                 + ",de.governikus.identification.report.objects.LegalPersonAuthentication",
               FINK_BANKING_REPORT
-                + ",de.governikus.identification.report.objects.FinkBankingAuthentication"})
+                + ",de.governikus.identification.report.objects.NaturalPersonMinimalAuthentication"})
   // @formatter:on
   public void testSubjectRefIsCorrectlyParsed(String jsonLocation, Class<? extends AuthenticationObject> subjectRefType)
   {
@@ -180,14 +180,14 @@ public class IdentificationReportTest implements FileReferences
   }
 
   /**
-   * verifies that the values of {@link EidAuthentication} are set
+   * verifies that the values of {@link NaturalPersonAuthentication} are set
    */
   @Test
   public void testValuesOfEidAuthAreSet()
   {
     final String json = readResourceFile(IDENTIFICATION_REPORT_2_0);
     IdentificationReport identificationReport = Assertions.assertDoesNotThrow(() -> {
-      return IdentificationReport.fromJson(json, EidAuthentication.class);
+      return IdentificationReport.fromJson(json, NaturalPersonAuthentication.class);
     });
 
     Assertions.assertEquals("be4f9806-0b5f-45c3-a008-96fd2750f8cb", identificationReport.getReportId());
@@ -198,9 +198,9 @@ public class IdentificationReportTest implements FileReferences
     Assertions.assertEquals("successful identification sent by SAML-Assertion", identificationReport.getIdStatement());
     Assertions.assertEquals(LevelOfAssurance.EIDAS_HIGH, identificationReport.getLevelOfAssurance());
 
-    EidAuthentication eidAuthentication = (EidAuthentication)identificationReport.getSubjectRef();
-    Assertions.assertEquals("John", eidAuthentication.getGivenName());
-    Assertions.assertEquals("Doe", eidAuthentication.getFamilyName());
+    NaturalPersonAuthentication naturalPersonAuthentication = (NaturalPersonAuthentication)identificationReport.getSubjectRef();
+    Assertions.assertEquals("John", naturalPersonAuthentication.getGivenName());
+    Assertions.assertEquals("Doe", naturalPersonAuthentication.getFamilyName());
   }
 
 }
