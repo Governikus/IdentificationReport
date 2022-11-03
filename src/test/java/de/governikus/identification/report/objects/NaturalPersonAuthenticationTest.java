@@ -31,7 +31,7 @@ public class NaturalPersonAuthenticationTest implements FileReferences
   {
     NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder().build();
     Assertions.assertFalse(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION,
-      naturalPersonAuthentication));
+                                                       naturalPersonAuthentication));
   }
 
   /**
@@ -41,11 +41,11 @@ public class NaturalPersonAuthenticationTest implements FileReferences
   public void testEidAuthenticationWithRestrictedIdOnly()
   {
     NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
-                                                           .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
-                                                           .build();
+                                                                                         .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
+                                                                                         .build();
 
     Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION,
-      naturalPersonAuthentication));
+                                                      naturalPersonAuthentication));
   }
 
   /**
@@ -55,16 +55,16 @@ public class NaturalPersonAuthenticationTest implements FileReferences
   public void testFreetextPlaceIsAccepted()
   {
     NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
-                                                           .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
-                                                           .givenName("Max")
-                                                           .familyName("Mustermann")
-                                                           .dateOfBirth("01-01-1999")
-                                                           .placeOfBirth("Bremen")
-                                                           .birthName("Liebmann")
-                                                           .placeOfResidence(Address.builder()
-                                                                                    .freeTextPlace("street 1")
-                                                                                    .build())
-                                                           .build();
+                                                                                         .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
+                                                                                         .givenName("Max")
+                                                                                         .familyName("Mustermann")
+                                                                                         .dateOfBirth("01-01-1999")
+                                                                                         .placeOfBirth("Bremen")
+                                                                                         .birthName("Liebmann")
+                                                                                         .placeOfResidence(Address.builder()
+                                                                                                                  .freeTextPlace("street 1")
+                                                                                                                  .build())
+                                                                                         .build();
     JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
     Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
   }
@@ -76,16 +76,16 @@ public class NaturalPersonAuthenticationTest implements FileReferences
   public void testNoPlaceInfoIsAccepted()
   {
     NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
-                                                           .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
-                                                           .givenName("Max")
-                                                           .familyName("Mustermann")
-                                                           .dateOfBirth("01-01-1999")
-                                                           .placeOfBirth("Bremen")
-                                                           .birthName("Liebmann")
-                                                           .placeOfResidence(Address.builder()
-                                                                                    .noPlaceInfo("nowhere")
-                                                                                    .build())
-                                                           .build();
+                                                                                         .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
+                                                                                         .givenName("Max")
+                                                                                         .familyName("Mustermann")
+                                                                                         .dateOfBirth("01-01-1999")
+                                                                                         .placeOfBirth("Bremen")
+                                                                                         .birthName("Liebmann")
+                                                                                         .placeOfResidence(Address.builder()
+                                                                                                                  .noPlaceInfo("nowhere")
+                                                                                                                  .build())
+                                                                                         .build();
     JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
     Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
   }
@@ -97,18 +97,18 @@ public class NaturalPersonAuthenticationTest implements FileReferences
   public void testStructuredPlaceAndNoPlaceInfoAreNotAcceptedTogether()
   {
     NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
-                                                           .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
-                                                           .givenName("Max")
-                                                           .familyName("Mustermann")
-                                                           .dateOfBirth("01-01-1999")
-                                                           .placeOfBirth("Bremen")
-                                                           .birthName("Liebmann")
-                                                           .placeOfResidence(Address.builder()
-                                                                                    .street("some street")
-                                                                                    .city("Bremen")
-                                                                                    .noPlaceInfo("nowhere")
-                                                                                    .build())
-                                                           .build();
+                                                                                         .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
+                                                                                         .givenName("Max")
+                                                                                         .familyName("Mustermann")
+                                                                                         .dateOfBirth("01-01-1999")
+                                                                                         .placeOfBirth("Bremen")
+                                                                                         .birthName("Liebmann")
+                                                                                         .placeOfResidence(Address.builder()
+                                                                                                                  .street("some street")
+                                                                                                                  .city("Bremen")
+                                                                                                                  .noPlaceInfo("nowhere")
+                                                                                                                  .build())
+                                                                                         .build();
     JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
     Assertions.assertFalse(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
   }
@@ -120,22 +120,22 @@ public class NaturalPersonAuthenticationTest implements FileReferences
   public void testMixOfAddressTypes()
   {
     NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
-                                                           .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
-                                                           .givenName("Max")
-                                                           .familyName("Mustermann")
-                                                           .dateOfBirth("01-01-1999")
-                                                           .placeOfBirth("Bremen")
-                                                           .birthName("Liebmann")
-                                                           .placeOfResidence(Address.builder()
-                                                                                    .street("street 1")
-                                                                                    .locality("bremen")
-                                                                                    .region("bremen")
-                                                                                    .country("D")
-                                                                                    .zipCode("22222")
-                                                                                    .noPlaceInfo("nowhere")
-                                                                                    .freeTextPlace("somewhere")
-                                                                                    .build())
-                                                           .build();
+                                                                                         .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
+                                                                                         .givenName("Max")
+                                                                                         .familyName("Mustermann")
+                                                                                         .dateOfBirth("01-01-1999")
+                                                                                         .placeOfBirth("Bremen")
+                                                                                         .birthName("Liebmann")
+                                                                                         .placeOfResidence(Address.builder()
+                                                                                                                  .street("street 1")
+                                                                                                                  .locality("bremen")
+                                                                                                                  .region("bremen")
+                                                                                                                  .country("D")
+                                                                                                                  .zipCode("22222")
+                                                                                                                  .noPlaceInfo("nowhere")
+                                                                                                                  .freeTextPlace("somewhere")
+                                                                                                                  .build())
+                                                                                         .build();
     JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
     Assertions.assertFalse(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
   }
@@ -148,13 +148,13 @@ public class NaturalPersonAuthenticationTest implements FileReferences
   public void testDateOfBirth(String dateOfBirth)
   {
     NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
-                                                           .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
-                                                           .givenName("Max")
-                                                           .familyName("Mustermann")
-                                                           .dateOfBirth(dateOfBirth)
-                                                           .placeOfBirth("Bremen")
-                                                           .birthName("Liebmann")
-                                                           .build();
+                                                                                         .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
+                                                                                         .givenName("Max")
+                                                                                         .familyName("Mustermann")
+                                                                                         .dateOfBirth(dateOfBirth)
+                                                                                         .placeOfBirth("Bremen")
+                                                                                         .birthName("Liebmann")
+                                                                                         .build();
     JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
     Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
   }
@@ -168,19 +168,20 @@ public class NaturalPersonAuthenticationTest implements FileReferences
   public void testUseAdditionalProperties()
   {
     NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
-                                                           .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
-                                                           .givenName("Max")
-                                                           .familyName("Mustermann")
-                                                           .dateOfBirth("01-01-1999")
-                                                           .placeOfBirth("Bremen")
-                                                           .birthName("Liebmann")
-                                                           .placeOfResidence(Address.builder()
-                                                                                    .freeTextPlace("somewhere")
-                                                                                    .build())
-                                                           .additionalProperties(Map.of("custom", "custom"))
-                                                           .build();
+                                                                                         .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
+                                                                                         .givenName("Max")
+                                                                                         .familyName("Mustermann")
+                                                                                         .dateOfBirth("01-01-1999")
+                                                                                         .placeOfBirth("Bremen")
+                                                                                         .birthName("Liebmann")
+                                                                                         .placeOfResidence(Address.builder()
+                                                                                                                  .freeTextPlace("somewhere")
+                                                                                                                  .build())
+                                                                                         .additionalProperties(Map.of("custom",
+                                                                                                                      "custom"))
+                                                                                         .build();
     Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION,
-      naturalPersonAuthentication));
+                                                      naturalPersonAuthentication));
     JsonObject jsonObject = JsonObject.mapFrom(naturalPersonAuthentication);
     Assertions.assertEquals("custom", jsonObject.getString("custom"));
     Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION, jsonObject));
@@ -193,9 +194,8 @@ public class NaturalPersonAuthenticationTest implements FileReferences
   public void testSchemaIdIsCorrectlyExtracted()
   {
     NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
-                                                           .restrictedId(
-                                                             "1234567890123456789012345678901234567890123456789012345678901234")
-                                                           .build();
+                                                                                         .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
+                                                                                         .build();
     Assertions.assertEquals("https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0"
                             + "/schema/natural-person.json",
                             naturalPersonAuthentication.getSchemaId());

@@ -8,11 +8,64 @@
     <artifactId>identification-report</artifactId>
     <version>2.0.0-SNAPSHOT</version>
 
+    <name>Identification Report</name>
+    <description>The identification report is a JSON structure used to identify natural or legal persons in government
+        processes.
+    </description>
+    <url>https://github.com/Governikus/IdentificationReport</url>
+
+    <licenses>
+        <license>
+            <name>EUPL</name>
+            <url>https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>bruns</id>
+            <name>Hartje Bruns</name>
+            <roles>
+                <role>design</role>
+                <role>management</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>knueppel</id>
+            <name>Pascal Knüppel</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/Governikus/IdentificationReport.git</connection>
+        <developerConnection>scm:git:ssh://github.com/Governikus/IdentificationReport.git</developerConnection>
+        <url>https://github.com/Governikus/IdentificationReport/tree/master</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--suppress UnresolvedMavenProperty -->
+        <formatter-path>${project.basedir}</formatter-path>
 
         <version.lombok>1.18.24</version.lombok>
 
@@ -31,6 +84,16 @@
 
         <!-- plugins -->
         <version.maven.compiler.plugin>3.10.1</version.maven.compiler.plugin>
+        <version.maven.versions.plugin>2.12.0</version.maven.versions.plugin>
+        <version.maven.surefire.plugin>3.0.0-M7</version.maven.surefire.plugin>
+        <version.maven.deploy.plugin>3.0.0</version.maven.deploy.plugin>
+        <version.maven.release.plugin>2.5.3</version.maven.release.plugin>
+        <version.maven.enforcer.plugin>3.1.0</version.maven.enforcer.plugin>
+        <version.maven.formatter.plugin>2.19.0</version.maven.formatter.plugin>
+        <version.maven.source.plugin>3.2.1</version.maven.source.plugin>
+        <version.maven.javadoc.plugin>3.4.0</version.maven.javadoc.plugin>
+        <version.maven.lombok.plugin>1.18.20.0</version.maven.lombok.plugin>
+        <version.maven.gpg.plugin>3.0.1</version.maven.gpg.plugin>
     </properties>
 
     <dependencyManagement>
@@ -178,6 +241,30 @@
     <build>
         <finalName>${project.artifactId}</finalName>
 
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${version.maven.deploy.plugin}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${version.maven.release.plugin}</version>
+
+                    <configuration>
+                        <localCheckout>true</localCheckout>
+                        <pushChanges>false</pushChanges>
+                        <mavenExecutorId>forked-path</mavenExecutorId>
+                        <!--suppress UnresolvedMavenProperty -->
+                        <arguments>-Dgpg.passphrase=${gpg.passphrase} -DprepareAndPerformRelease</arguments>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -189,6 +276,213 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${version.maven.versions.plugin}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${version.maven.surefire.plugin}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${version.maven.enforcer.plugin}</version>
+                <executions>
+                    <execution>
+                        <id>enforce</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <rules>
+                        <requireMavenVersion>
+                            <version>[3.3,)</version>
+                        </requireMavenVersion>
+
+                        <requireReleaseDeps>
+                            <message>No Snapshots Allowed on release!</message>
+                            <onlyWhenRelease>true</onlyWhenRelease>
+                        </requireReleaseDeps>
+                        <banDuplicatePomDependencyVersions/>
+                        <dependencyConvergence/>
+                    </rules>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>net.revelc.code.formatter</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <version>${version.maven.formatter.plugin}</version>
+                <configuration>
+                    <configFile>${formatter-path}/formatter.xml</configFile>
+                    <lineEnding>LF</lineEnding>
+                    <!-- delomboked sources do not conform to the formatter and use of the -->
+                    <!-- lombok plugin changes sourceDirectory and testSourceDirectory -->
+                    <sourceDirectory>src/main/java</sourceDirectory>
+                    <testSourceDirectory>src/test/java</testSourceDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release-only</id>
+            <activation>
+                <property>
+                    <name>prepareAndPerformRelease</name>
+                </property>
+            </activation>
+
+            <properties>
+                <!-- This is used in conjunction with the lombok-maven-plugin to generate delomboked sources, -->
+                <!-- effectively this switches the default sourceDirectory with the delomboked version. -->
+                <source.directory>target/generated-sources/delombok</source.directory>
+                <source.test.directory>target/generated-test-sources/delombok</source.test.directory>
+            </properties>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.projectlombok</groupId>
+                        <artifactId>lombok-maven-plugin</artifactId>
+                        <version>${version.maven.lombok.plugin}</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${version.lombok}</version>
+                            </dependency>
+                        </dependencies>
+                        <executions>
+                            <execution>
+                                <id>delombok</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>delombok</goal>
+                                </goals>
+                                <configuration>
+                                    <addOutputDirectory>false</addOutputDirectory>
+                                    <sourceDirectory>src/main/java</sourceDirectory>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>test-delombok</id>
+                                <phase>generate-test-sources</phase>
+                                <goals>
+                                    <goal>testDelombok</goal>
+                                </goals>
+                                <configuration>
+                                    <addOutputDirectory>false</addOutputDirectory>
+                                    <sourceDirectory>src/test/java</sourceDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>net.revelc.code.formatter</groupId>
+                        <artifactId>formatter-maven-plugin</artifactId>
+                        <version>${version.maven.formatter.plugin}</version>
+                        <configuration>
+                            <configFile>${formatter-path}/formatter.xml</configFile>
+                            <lineEnding>LF</lineEnding>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>validate main sources and test sources</id>
+                                <goals>
+                                    <!-- make sure that no unformatted code is released -->
+                                    <goal>validate</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- delomboked sources do not conform to the formatter and use of the -->
+                                    <!-- lombok plugin changes sourceDirectory and testSourceDirectory -->
+                                    <sourceDirectory>src/main/java</sourceDirectory>
+                                    <testSourceDirectory>src/test/java</testSourceDirectory>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>format delomboked source code</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <!-- this should format the generated delomboked source code -->
+                                    <goal>format</goal>
+                                </goals>
+                                <configuration>
+                                    <!-- delomboked sources do not conform to the formatter and use of the -->
+                                    <!-- lombok plugin changes sourceDirectory and testSourceDirectory -->
+                                    <sourceDirectory>${source.directory}</sourceDirectory>
+                                    <testSourceDirectory>${source.test.directory}</testSourceDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${version.maven.source.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${version.maven.javadoc.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadoc</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <additionalOptions>-Xdoclint:none</additionalOptions>
+                            <source>8</source>
+                        </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${version.maven.gpg.plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
