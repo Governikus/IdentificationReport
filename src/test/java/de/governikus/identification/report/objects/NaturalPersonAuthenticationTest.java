@@ -1,5 +1,6 @@
 package de.governikus.identification.report.objects;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.jupiter.api.Assertions;
@@ -167,6 +168,9 @@ public class NaturalPersonAuthenticationTest implements FileReferences
   @Test
   public void testUseAdditionalProperties()
   {
+
+    Map<String, Object> additionalProperties = new HashMap<>();
+    additionalProperties.put("custom", "custom");
     NaturalPersonAuthentication naturalPersonAuthentication = NaturalPersonAuthentication.builder()
                                                                                          .restrictedId("1234567890123456789012345678901234567890123456789012345678901234")
                                                                                          .givenName("Max")
@@ -177,8 +181,7 @@ public class NaturalPersonAuthenticationTest implements FileReferences
                                                                                          .placeOfResidence(Address.builder()
                                                                                                                   .freeTextPlace("somewhere")
                                                                                                                   .build())
-                                                                                         .additionalProperties(Map.of("custom",
-                                                                                                                      "custom"))
+                                                                                         .additionalProperties(additionalProperties)
                                                                                          .build();
     Assertions.assertTrue(SchemaValidator.isJsonValid(SchemaLocations.NATURAL_PERSON_SCHEMA_LOCATION,
                                                       naturalPersonAuthentication));

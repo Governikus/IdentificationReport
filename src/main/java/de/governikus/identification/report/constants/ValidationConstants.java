@@ -8,7 +8,6 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import de.governikus.identification.report.objects.AuthenticationObject;
 import de.governikus.identification.report.objects.LegalPersonAuthentication;
@@ -16,6 +15,7 @@ import de.governikus.identification.report.objects.NaturalPersonAuthentication;
 import de.governikus.identification.report.objects.NaturalPersonMinimalAuthentication;
 import de.governikus.identification.report.validation.SchemaValidator;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.json.jackson.DatabindCodec;
 import io.vertx.json.schema.JsonSchema;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -33,7 +33,7 @@ public final class ValidationConstants
   /**
    * the jackson object mapper used to parse json into java pojos and vice versa
    */
-  public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+  public static final ObjectMapper OBJECT_MAPPER = DatabindCodec.mapper();
 
   /**
    * this map will remember each schema in order to prevent the schemas from being parsed over and over again
@@ -63,8 +63,6 @@ public final class ValidationConstants
     AUTH_OBJECT_SUB_TYPE_REFERENCES.put("https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0"
                                         + "/schema/natural-person-minimal.json",
                                         NaturalPersonMinimalAuthentication.class);
-
-    OBJECT_MAPPER.registerModule(new JavaTimeModule());
   }
 
   /**

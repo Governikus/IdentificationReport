@@ -59,8 +59,8 @@
     </distributionManagement>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
@@ -73,6 +73,7 @@
         <version.jackson>2.13.4</version.jackson>
         <version.jackson.databind>2.13.4.2</version.jackson.databind>
         <version.apache.commons.io>2.11.0</version.apache.commons.io>
+        <version.nimbus.jose.jwt>9.25.4</version.nimbus.jose.jwt>
 
         <!-- logging dependencies -->
         <version.slf4j>1.7.36</version.slf4j>
@@ -123,6 +124,11 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${version.apache.commons.io}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${version.nimbus.jose.jwt}</version>
             </dependency>
 
             <!-- logging dependencies -->
@@ -201,6 +207,10 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
         </dependency>
 
         <!-- test dependencies -->

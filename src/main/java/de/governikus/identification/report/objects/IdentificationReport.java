@@ -1,5 +1,6 @@
 package de.governikus.identification.report.objects;
 
+import java.security.cert.X509Certificate;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 import de.governikus.identification.report.constants.SchemaLocations;
 import de.governikus.identification.report.constants.ValidationConstants;
+import de.governikus.identification.report.jwt.JwtHandler;
 import de.governikus.identification.report.utils.Utilities;
 import de.governikus.identification.report.validation.SchemaValidator;
 import io.vertx.core.json.JsonObject;
@@ -94,11 +96,6 @@ public class IdentificationReport
    * This should be a short link to the subject authenticated. Currently supported: firstName and lastName
    */
   private AuthenticationObject subjectRef;
-
-  /**
-   * the authentication time of the {@link #subjectRef}
-   */
-  private Instant authenticationTimestamp;
 
   /**
    * The element corresponds to the TransactionContext in BSI TR-03130 which MAY be used to transmit context
@@ -271,4 +268,26 @@ public class IdentificationReport
     this.levelOfAssurance = levelOfAssurance;
   }
 
+  /**
+   * parses a JWS string into an identification report and verifies the signature of the JWS
+   *
+   * @param certificate the certificate needed to validate the signature
+   * @param json the json string that should be validated and parsed
+   * @param subjectRefType the type of the subjectRef within the identification report.
+   * @return the body of the JWS parsed into an {@link IdentificationReport} instance
+   */
+  public static <T extends AuthenticationObject> IdentificationReport fromJws(X509Certificate certificate,
+                                                                              String json,
+                                                                              Class<T> subjectRefType)
+  {
+    JwtHandler jwtHandler = new JwtHandler(null, certificate);
+    JwtHandler.PlainJwtData plainJwtData = jwtHandler.handleJwt(json);
+    return fromJson(plainJwtData.getBody().toString(), subjectRefType);
+  }
+
+  @Override
+  public String toString()
+  {
+    return toJson().encode();
+  }
 }

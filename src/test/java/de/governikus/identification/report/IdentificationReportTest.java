@@ -1,9 +1,12 @@
 package de.governikus.identification.report;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import de.governikus.identification.report.utils.Utilities;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -81,13 +84,15 @@ public class IdentificationReportTest implements FileReferences
                                                  "customField", "unwanted property");
     // @formatter:on
 
+    List<JsonObject> documentReferenceList = new ArrayList<>();
+    documentReferenceList.add(documentReference);
     IdentificationReport identificationReport = IdentificationReport.builder()
                                                                     .reportId(UUID.randomUUID().toString())
                                                                     .serverIdentity("https://test.governikus-eid.de/gov_autent/async")
                                                                     .reportTime(Instant.now())
                                                                     .identificationTime(Instant.now())
                                                                     .levelOfAssurance(LevelOfAssurance.EIDAS_LOW)
-                                                                    .documentReferences(List.of(documentReference))
+                                                                    .documentReferences(documentReferenceList)
                                                                     .build();
     JsonObject resource = identificationReport.toJson();
 
@@ -165,7 +170,7 @@ public class IdentificationReportTest implements FileReferences
                 + ",de.governikus.identification.report.objects.NaturalPersonAuthentication",
               IDENTIFICATION_REPORT_WITH_LEGAL_PERSON_SUBJECT_2_0
                 + ",de.governikus.identification.report.objects.LegalPersonAuthentication",
-              FINK_BANKING_REPORT
+              NATURAL_PERSON_MINIMAL_REPORT
                 + ",de.governikus.identification.report.objects.NaturalPersonMinimalAuthentication"})
   // @formatter:on
   public void testSubjectRefIsCorrectlyParsed(String jsonLocation, Class<? extends AuthenticationObject> subjectRefType)
@@ -193,8 +198,8 @@ public class IdentificationReportTest implements FileReferences
     Assertions.assertEquals("be4f9806-0b5f-45c3-a008-96fd2750f8cb", identificationReport.getReportId());
     Assertions.assertEquals("https://test.governikus-eid.de/gov_autent/async",
                             identificationReport.getServerIdentity());
-    Assertions.assertEquals(Instant.parse("2020-06-25T10:20:39+02:00"), identificationReport.getReportTime());
-    Assertions.assertEquals(Instant.parse("2020-06-25T10:19:54+02:00"), identificationReport.getIdentificationTime());
+    Assertions.assertEquals(Instant.parse("2020-06-25T10:20:39Z"), identificationReport.getReportTime());
+    Assertions.assertEquals(Instant.parse("2020-06-25T10:19:54Z"), identificationReport.getIdentificationTime());
     Assertions.assertEquals("successful identification sent by SAML-Assertion", identificationReport.getIdStatement());
     Assertions.assertEquals(LevelOfAssurance.EIDAS_HIGH, identificationReport.getLevelOfAssurance());
 

@@ -1,8 +1,8 @@
 {
     "reportId": "be4f9806-0b5f-45c3-a008-96fd2750f8cb",
     "serverIdentity": "https://docker.governikus-eid.de/aidc-next/npa",
-    "reportTime": "2020-06-25T10:20:39+02:00",
-    "identificationTime": "2020-06-25T10:19:54+02:00",
+    "reportTime": "2020-06-25T10:20:39Z",
+    "identificationTime": "2020-06-25T10:19:54Z",
     "subjectRef": {
         "subject": {
             "legalPerson": {
@@ -27,6 +27,5 @@
             }
         }
     },
-    "authenticationTimestamp": "2022-07-29T11:16:52Z",
     "levelOfAssurance": "http://bsi.bund.de/eID/LoA/hoch"
 }
