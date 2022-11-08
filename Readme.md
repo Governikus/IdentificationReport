@@ -25,6 +25,7 @@ subjectRef | object  | This should be a short link to the subject authenticate
 contextInformation |array (string) |  The element corresponds to the TransactionContext in BSI TR-03130 which MAY be used to transmit context information. To have a link between this identification report and the service for which the identification process was started.
 documentReferences | array (objects) |  This element can contain references to documents including their hashes. This is an optional attribute since this is not always needed. This might be useful in some usecases.
 loaSent | string (enum) | in eIDAS contexts an id scheme (if it is notified) has a known LoA. When used in a national context only the values from the authority ```bsi.bund.de``` SHALL be used, which correspond to the levels as defined in [TR-03107-1](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR03107/TR-03107-1.pdf). See also [BSI TR-03130](https://www.bsi.bund.de/DE/Publikationen/TechnischeRichtlinien/tr03130/tr-03130.html).
+trustFramework | string | the type of the executed authentication. This type will also determine the loaSent-attribute.
 
 
 ## Sample Data
