@@ -1,7 +1,7 @@
 {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "$id": "https://raw.githubusercontent.com/Governikus/IdentificationReport/1.0.1/schema/identification-report.json",
+    "$id": "https://raw.githubusercontent.com/Governikus/IdentificationReport/1.0.2/schema/identification-report.json",
     "type": "object",
     "title": "json-schema for identification service reports",
     "description": "This is a schema definition for an identification report. This report is used to have a receipt to prove that an identificaton process was successfully accomplisched",
@@ -151,11 +151,19 @@
             "examples": [
                 [
                     {
-                        "documentName":"test.pdf",
-                        "hashAlgo":"SHA-256","digest":"0c2720631b927e25d5cb8b5ca2b9408c552ea76797e3419245931296732fd0d2"
+                        "documentName": "test.pdf",
+                        "hashAlgo": "SHA-256",
+                        "digest": "0c2720631b927e25d5cb8b5ca2b9408c552ea76797e3419245931296732fd0d2"
                     }
                 ]
             ]
+        },
+        "trustFramework": {
+            "$id": "#/properties/trustFramework",
+            "type": "string",
+            "title": "Determination value of the authentication type",
+            "description": "Used to identify how the entity was authenticated to determine the level of assurance of this authentication. See also attribute #/properties/levelOfAssurance",
+            "default": ""
         },
         "loaSent": {
             "$id": "#/properties/loaSent",
