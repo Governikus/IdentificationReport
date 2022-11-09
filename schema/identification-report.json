@@ -108,14 +108,14 @@
             "type": "object",
             "title": "SubjectRef",
             "description": "This should be a short link to the subject authenticated. Currently supported: firstName and lastName",
-            "default": "ich ",
+            "default": "",
             "examples": [
                 {
                     "restrictedId": "some-unique-identifier",
                     "givenName": "John",
                     "familyName": "Doe",
                     "placeOfResidence": {
-                        "street": "muster street 66"
+                        "street": "Sample Street 66"
                     }
                 },
                 {
