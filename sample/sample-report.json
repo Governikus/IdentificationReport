@@ -1,9 +1,9 @@
 {
-  "$schema": "https://raw.githubusercontent.com/Governikus/IdentificationReport/1.0.1/schema/identification-report.json",
-  "reportID": "be4f9806-0b5f-45c3-a008-96fd2750f8cb",
+  "$schema": "https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/identification-report.json",
+  "reportId": "be4f9806-0b5f-45c3-a008-96fd2750f8cb",
   "serverIdentity": "https://test.governikus-eid.de/gov_autent/async",
   "reportTime": "2020-06-25T10:20:39+02:00",
-  "identificationDate": "2020-06-25T10:19:54+02:00",
+  "identificationTime": "2020-06-25T10:19:54+02:00",
   "idStatus": "success",
   "subjectRef": {
     "firstName": "John",
@@ -20,5 +20,5 @@
       "digest": "0c2720631b927e25d5cb8b5ca2b9408c552ea76797e3419245931296732fd0d2"
     }
   ],
-  "loaSent": "http://eidas.europa.eu/LoA/low"
+  "levelOfAssurance": "http://eidas.europa.eu/LoA/low"
 }

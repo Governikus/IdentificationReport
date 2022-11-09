@@ -15,16 +15,17 @@ The following attributes are currently in place.
 
 Attribute    | Type          | Description
 ---- | ------------ | -------------
-reportID | string  | Must be unique to a single report. GUID is recommended here.
+reportId | string  | Must be unique to a single report. GUID is recommended here.
 serverIdentity | string | This is a server id as software instance. This could be the server IP address, servername or the URL of the SAML endpoint providing this identity report (like ServerIdentity in XTA2 Version 4).
 reportTime | string  (date-time) | Datetime of the creation of this report (like ReportTime in XTA2 Version 4). 
-identificationDate | string (date-time) |  Datetime of the identification process as stated in the original id statement.
+identificationTime | string (date-time) |  Datetime of the identification process as stated in the original id statement.
 idStatus | string  (enum) | This is the value to indicate the status of the identification process. In case of failure the corresponding reason shall be stated in the idStatement attribute.
 idStatement | string |  This is the error reason or some additional information in case of unknown or success situations. The corresponding message should be human-understandable.
 subjectRef | object  | This should be a short link to the subject authenticated. Currently supported: firstName and lastName. This can easily extended but keep in mind that this field is sensible according to data privacy and should contain just enough data to link to a person.
+subjectRefType | string | Describes the object placed in "#subjectRef". This must be a schema-id of another schema. There are publicly available schema-definitions here: https://github.com/Governikus/IdReport-SubjectRefSchemas.
 contextInformation |array (string) |  The element corresponds to the TransactionContext in BSI TR-03130 which MAY be used to transmit context information. To have a link between this identification report and the service for which the identification process was started.
 documentReferences | array (objects) |  This element can contain references to documents including their hashes. This is an optional attribute since this is not always needed. This might be useful in some usecases.
-loaSent | string (enum) | in eIDAS contexts an id scheme (if it is notified) has a known LoA. When used in a national context only the values from the authority ```bsi.bund.de``` SHALL be used, which correspond to the levels as defined in [TR-03107-1](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR03107/TR-03107-1.pdf). See also [BSI TR-03130](https://www.bsi.bund.de/DE/Publikationen/TechnischeRichtlinien/tr03130/tr-03130.html).
+levelOfAssurance | string (enum) | in eIDAS contexts an id scheme (if it is notified) has a known LoA. When used in a national context only the values from the authority ```bsi.bund.de``` SHALL be used, which correspond to the levels as defined in [TR-03107-1](https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Publikationen/TechnischeRichtlinien/TR03107/TR-03107-1.pdf). See also [BSI TR-03130](https://www.bsi.bund.de/DE/Publikationen/TechnischeRichtlinien/tr03130/tr-03130.html).
 trustFramework | string | the type of the executed authentication. This type will also determine the loaSent-attribute.
 
 
@@ -43,11 +44,11 @@ See also [sample-report](sample/sample-report.json)
 
 ```json
 {
-  "$schema": "https://raw.githubusercontent.com/Governikus/IdentificationReport/1.0.1/schema/identification-report.json",
-  "reportID": "be4f9806-0b5f-45c3-a008-96fd2750f8cb",
+  "$schema": "https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/identification-report.json",
+  "reportId": "be4f9806-0b5f-45c3-a008-96fd2750f8cb",
   "serverIdentity": "https://test.governikus-eid.de/gov_autent/async",
   "reportTime": "2020-06-25T10:20:39+02:00",
-  "identificationDate": "2020-06-25T10:19:54+02:00",
+  "identificationTime": "2020-06-25T10:19:54+02:00",
   "idStatus": "success",
   "subjectRef": {
     "firstName": "John",
@@ -64,7 +65,7 @@ See also [sample-report](sample/sample-report.json)
       "digest": "0c2720631b927e25d5cb8b5ca2b9408c552ea76797e3419245931296732fd0d2"
     }
   ],
-  "loaSent": "http://eidas.europa.eu/LoA/low"
+  "levelOfAssurance": "http://eidas.europa.eu/LoA/low"
 }
 ```
 ### Signature Material

@@ -1,28 +1,23 @@
 {
-    "version": "1.0.2",
-    "$schema": "https://json-schema.org/draft/2019-09/schema",
-    "$id": "https://raw.githubusercontent.com/Governikus/IdentificationReport/1.0.2/schema/identification-report.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/identification-report.json",
     "type": "object",
     "title": "json-schema for identification service reports",
-    "description": "This is a schema definition for an identification report. This report is used to have a receipt to prove that an identificaton process was successfully accomplisched",
+    "description": "This is a schema definition for an identification report. This report is used to have a receipt to prove that an identification process was successfully accomplished",
     "default": {},
     "required": [
-        "reportID",
+        "reportId",
         "serverIdentity",
         "reportTime",
-        "identificationDate",
-        "idStatus",
-        "subjectRef",
-        "contextInformation",
-        "loaSent",
-        "idStatement"
+        "identificationTime",
+        "levelOfAssurance"
     ],
     "properties": {
-        "reportID": {
-            "$id": "#/properties/reportID",
+        "reportId": {
+            "$id": "#/properties/reportId",
             "type": "string",
             "title": "Generic ID",
-            "description": "Must be uniq to a single report. GUID is recommended here",
+            "description": "Must be unique to a single report. GUID is recommended here",
             "default": "",
             "examples": [
                 "be4f9806-0b5f-45c3-a008-96fd2750f8cb"
@@ -49,8 +44,8 @@
                 "2020-06-25T10:20:39+00:00"
             ]
         },
-        "identificationDate": {
-            "$id": "#/properties/identificationDate",
+        "identificationTime": {
+            "$id": "#/properties/identificationTime",
             "type": "string",
             "format": "date-time",
             "title": "Identification Timestamp",
@@ -65,6 +60,7 @@
             "type": "string",
             "enum": [
                 "success",
+                "incomplete",
                 "failure",
                 "unknown"
             ],
@@ -79,10 +75,32 @@
             "$id": "#/properties/idStatement",
             "type": "string",
             "title": "More details on identification outcome",
-            "description": "This is the error reason or some additional information in case of unknown or success situations. The corresponding message should be human understanable",
+            "description": "This is the error reason or some additional information in case of unknown or success situations. The corresponding message should be human readable",
             "default": "",
             "examples": [
                 "Error: requested LoA could not be found"
+            ]
+        },
+        "trustFramework": {
+            "$id": "#/properties/trustFramework",
+            "type": "string",
+            "title": "Determination value of the authentication type",
+            "description": "Used to identify how the entity was authenticated to determine the level of assurance of this authentication. See also attribute #/properties/levelOfAssurance",
+            "default": "",
+            "examples": [
+                "eid",
+                "eidas"
+            ]
+        },
+        "subjectRefType": {
+            "$id": "#/properties/subjectRefType",
+            "type": "string",
+            "title": "SubjectRefType",
+            "description": "Describes the object type that is to be expected within the #/properties/subjectRef attribute in form of a schema-id.",
+            "default": "",
+            "examples": [
+                "https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/eid-authentication.json",
+                "https://raw.githubusercontent.com/Governikus/IdentificationReport/2.0.0/schema/legal-person-authentication.json"
             ]
         },
         "subjectRef": {
@@ -90,21 +108,21 @@
             "type": "object",
             "title": "SubjectRef",
             "description": "This should be a short link to the subject authenticated. Currently supported: firstName and lastName",
-            "default": "",
-            "properties": {
-                "firstName": {
-                    "type": "string",
-                    "description": "The person's first name."
-                },
-                "lastName": {
-                    "type": "string",
-                    "description": "The person's last name."
-                }
-            },
+            "default": "ich ",
             "examples": [
                 {
-                    "firstName": "John",
-                    "lastName": "Doe"
+                    "restrictedId": "some-unique-identifier",
+                    "givenName": "John",
+                    "familyName": "Doe",
+                    "placeOfResidence": {
+                        "street": "muster street 66"
+                    }
+                },
+                {
+                    "id": "some-unique-identifier",
+                    "organizationName": "Test Workshop",
+                    "registerType": "PR",
+                    "legalForm": "public limited company"
                 }
             ]
         },
@@ -128,48 +146,43 @@
             "title": "can be used to link specific documents to an identification process",
             "description": "This element can contain references to documents including their hashes. This is an optional attribut.",
             "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "documentName": {
-                        "type": "string"
-                    },
-                    "hashAlgo": {
-                        "type": "string"
-                    },
-                    "digest": {
-                        "type": "string"
+            "items": [
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "documentId": {
+                            "type": "string"
+                        },
+                        "documentName": {
+                            "type": "string"
+                        },
+                        "digestAlgorithm": {
+                            "type": "string"
+                        },
+                        "digest": {
+                            "type": "string"
+                        }
                     }
-                },
-                "required": [
-                    "documentName",
-                    "hashAlgo",
-                    "digest"
-                ]
-            },
+                }
+            ],
             "default": "",
             "examples": [
                 [
                     {
+                        "documentId": "123456",
                         "documentName": "test.pdf",
-                        "hashAlgo": "SHA-256",
+                        "digestAlgorithm": "SHA-256",
                         "digest": "0c2720631b927e25d5cb8b5ca2b9408c552ea76797e3419245931296732fd0d2"
                     }
                 ]
             ]
         },
-        "trustFramework": {
-            "$id": "#/properties/trustFramework",
-            "type": "string",
-            "title": "Determination value of the authentication type",
-            "description": "Used to identify how the entity was authenticated to determine the level of assurance of this authentication. See also attribute #/properties/levelOfAssurance",
-            "default": ""
-        },
-        "loaSent": {
-            "$id": "#/properties/loaSent",
+        "levelOfAssurance": {
+            "$id": "#/properties/levelOfAssurance",
             "type": "string",
             "title": "Level of assurance received",
-            "description": "in eIDAS contexts an id scheme (if it is notified) has a known LoA. When used in a national context only the values from the authority bsi.bund.de SHALL be used, which correspond to the levels as defined in [TR-03107-1]. See also BSI TR-03130",
+            "description": "in eIDAS contexts an id scheme (if it is notified) has a known level of assurance. When used in a national context only the values from the authority bsi.bund.de SHALL be used, which correspond to the levels as defined in [TR-03107-1]. See also BSI TR-03130. Note that the level of assurance that is returned from the identity provider may differ from the value that was requested.",
             "default": "unknown",
             "enum": [
                 "http://eidas.europa.eu/LoA/low",
