@@ -134,7 +134,7 @@
             },
             "title": "Context Information provided by the service",
             "description": "The element corresponds to the TransactionContext in BSI TR-03130 which MAY be used to transmit context information like an ID or a hash. To have a link between this identification report and the service for which the identification process was started",
-            "default": "",
+            "default": [],
             "examples": [
                 [
                     "Application ID: XYZ900LKJL"
@@ -146,7 +146,7 @@
             "title": "can be used to link specific documents to an identification process",
             "description": "This element can contain references to documents including their hashes. This is an optional attribut.",
             "type": "array",
-            "items": [
+            "items":
                 {
                     "type": "object",
                     "additionalProperties": false,
@@ -164,9 +164,8 @@
                             "type": "string"
                         }
                     }
-                }
-            ],
-            "default": "",
+                },
+            "default": [],
             "examples": [
                 [
                     {
